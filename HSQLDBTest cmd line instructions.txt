@@ -1,0 +1,42 @@
+
+1. My first HSQLDB Test project is built to firstly access a HSQLDB using plain jdbc code and issue SQL commands and later use Hibernate
+   The project resides in the folder:
+   
+	C:\Users\ollem\OneDrive\Coding Projects\JavaCode\HSQLDBFirstTest
+
+2. The project is under git and github control. URL to respository in github is:
+	
+	https://github.com/OlleMurby/HSQLDBTest01.git
+	
+3.a The HSQL database is used, and (current) latest library for the db is (which is also the current setting in the pom.xml):
+
+	<dependency>
+        <groupId>org.hsqldb</groupId>
+        <artifactId>hsqldb</artifactId>
+        <version>2.7.2</version>
+    </dependency>
+
+3.b The HSQL library is downloaded into this path:
+
+	 "C:\Users\ollem\.m2\repository\org\hsqldb\hsqldb\2.7.2\hsqldb-2.7.2.jar"
+	 
+3.c And, to start the HSQLDB User Interface, to work with a database, the following command is executed:
+
+	java -cp "C:\Users\ollem\.m2\repository\org\hsqldb\hsqldb\2.7.2\hsqldb-2.7.2.jar" org.hsqldb.util.DatabaseManagerSwing
+	
+	
+3.d The database configured for this test is named:
+	
+	target/mydb
+	
+	can be found relative to the general project directory, i.e. in the target subdirectory 
+	
+	full connection url is:
+	
+	jdbc:hsqldb:file:target/mydb
+
+3.f Login parameters
+	
+	user name: dev_user
+	pwd: Admin123!
+	
