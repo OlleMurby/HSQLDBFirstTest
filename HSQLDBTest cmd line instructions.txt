@@ -1,13 +1,25 @@
 
-1. My first HSQLDB Test project is built to firstly access a HSQLDB using plain jdbc code and issue SQL commands and later use Hibernate
+1. My first java HSQLDB Test project is built to firstly access a HSQLDB using plain jdbc code and issue SQL commands and later use Hibernate
    The project resides in the folder:
    
 	C:\Users\ollem\OneDrive\Coding Projects\JavaCode\HSQLDBFirstTest
 
 2. The project is under git and github control. URL to respository in github is:
 	
-	https://github.com/OlleMurby/HSQLDBTest01.git
+	https://github.com/OlleMurby/HSQLDBFirstTest.git
 	
+	commands used to set-up git locally and 'link' to GitHub (remember to have created the GitHub repository first :-))
+	
+		git init -b main
+		git add -A .
+		git commit -m "Initial commit"
+		git remote add origin https://github.com/OlleMurby/HSQLDBFirstTest.git
+		git push origin main
+		git checkout -b WIP
+		git push origin WIP
+		
+		
+		
 3.a The HSQL database is used, and (current) latest library for the db is (which is also the current setting in the pom.xml):
 
 	<dependency>
