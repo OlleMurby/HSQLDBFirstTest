@@ -37,18 +37,76 @@
 	java -cp "C:\Users\ollem\.m2\repository\org\hsqldb\hsqldb\2.7.2\hsqldb-2.7.2.jar" org.hsqldb.util.DatabaseManagerSwing
 	
 	
-3.d The database configured for this test is named:
+3.d The database configured for this test is named (check atcutal values in the java class...):
 	
-	target/mydb
+	target/TestDB02
 	
 	can be found relative to the general project directory, i.e. in the target subdirectory 
 	
 	full connection url is:
 	
-	jdbc:hsqldb:file:target/mydb
+	jdbc:hsqldb:file:target/TestDB02
+
+	Note: Previous testing was using the database file name "mydb", so the target would have been 'target/mydb' and connection url:
+		jdbc:hsqldb:file:target/mydb
 
 3.f Login parameters
 	
+	For "target/mydb"
 	user name: dev_user
 	pwd: Admin123!
+
+	for "target/TestDB02"
+        user name = "SA" ;
+        password = "password" ;
+
+4. If you want to run the java program (class) to also use the HSQLDB as Server (which is a good training excersice...) then...
 	
+	You need to start the HSQLDB server javaprogram, and have it define which database file to use and how to export it:
+
+	This is the command:
+	java -cp "C:\Users\ollem\.m2\repository\org\hsqldb\hsqldb\2.7.2\hsqldb-2.7.2.jar" org.hsqldb.server.Server --database.0 file:target/TestDB02 --dbname.0 TestDB02	
+
+	The path to the database file is "relative" to the 'current directory' where the process is run (the process for the Server)
+	
+	In this case the --database.0 parameter value says "file:target/TestDB02". It tells the server that the database to use is a 
+	file/disk based database (as opposed to in-memory, or a pure resource db), and the path to it, in this case "target\TestDB02"
+
+	finally, the --dbname.0 parameter ("TestDB02" in this case) tells the Server what 'name' it makes it available on the connection
+	string url. The Java connection string URL to access this DB when accessed from a HSQLDB Server is:
+
+	"jdbc:hsqldb:hsql://localhost/TestDB02"
+
+	This url is also to be from within the HSQLDB User interface (started as per point 3.c above) in the connection string there...
+	
+5. To run this java test program from the command line, from the packaged jar file that is, the following needs to be considered:
+
+	1. The hsqldb drivers needs to be accessible to the java program/class when being run
+	2. the omub.utils classes also needs to be accessible to the java program/class when being run
+	
+	To sort this out, the current approach is to create a subdirectory in the 'target' folder (since it is in the target folder the big jar-file of this project ends up)
+	And, in that subdirectory, copy in the two required library/jar files required to run this program/class.
+	Note: The two dependencies currently identified which needs to go in there are the two items listed in the pom.xml file, namely "org.hsqldb" and "omub.utils".
+	I located the 'org.hsqldb'-jar file in the folder where I had donwloaded and installed/extracted the HSQLDB files into: 
+		C:\HSQLDB\hsqldb-2.7.2\hsqldb\lib
+		and, the jar file i copied was:
+			hsqldb.jar
+	For the omub.utils dependency, I located the latest build I had, in the following folder:
+		C:\Users\ollem\OneDrive\Coding Projects\JavaCode\utils\target
+		and the jar file I copied was:
+		utils-1.0-SNAPSHOT.jar
+	
+	I placed both these files into the 'target\lib' folder of this project (which currently is: C:\Users\ollem\OneDrive\Coding Projects\JavaCode\HSQLDBFirstTest, see point 1 above)
+	The folder content looks like this by using the command: dir /b target\lib
+		hsqldb.jar
+		utils-1.0-SNAPSHOT.jar
+	
+	So, in order to 'run' the java program/class of this project the following java command needs to be executed, from the project main folder that is)
+	
+		java -cp target/lib/*;target/HSQLDBFirstTest-1.0-SNAPSHOT.jar omub.hsqldbfirsttest.HSQLDBFirstTest
+		
+	where you can see the class path (the -cp option) pointing to both target/lib/* and also to the jar file of the main class. And, since I don't have a manifest file yet, I 
+	need to explicitly call out the name of the main executable class.
+	
+	Note: If you have a compiled version of the program/class that uses HSQLDB Server (see point 4 above), don't forget that you need to start the HSQLDB Server as well on a
+	separate command window/process and make it expose the database you have compiled into your class...
